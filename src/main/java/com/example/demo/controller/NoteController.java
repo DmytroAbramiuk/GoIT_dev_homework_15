@@ -22,22 +22,22 @@ import java.util.UUID;
 
 @Validated
 @Controller
-@RequestMapping("/templates/notes")
+@RequestMapping("/notes")
 public class NoteController {
     @Autowired private NoteService noteService;
     @Autowired private NoteMapper noteMapper;
 
     @RequestMapping(value = "/list", method = {RequestMethod.GET})
     public ModelAndView noteList() {
-        ModelAndView result = new ModelAndView("templates/notes/notes");
-        result.addObject("templates/notes", noteMapper.toNoteResponses(noteService.listAll()));
+        ModelAndView result = new ModelAndView("notes/notes");
+        result.addObject("notes", noteMapper.toNoteResponses(noteService.listAll()));
         return result;
     }
 
     @RequestMapping(value = "/edit", method = {RequestMethod.GET})
     public ModelAndView getNoteForEdit(@NotEmpty @RequestParam(value="id") String id) throws NoteNotFoundException {
         UUID uuid = UUID.fromString(id);
-        ModelAndView result = new ModelAndView("templates/notes/updateNote");
+        ModelAndView result = new ModelAndView("notes/updateNote");
         result.addObject("note", noteMapper.toNoteResponse(noteService.getById(uuid)));
         return result;
     }
